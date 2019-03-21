@@ -22,9 +22,6 @@
 
 
 //start a new game
-createClearMap();
-generateFood();
-drawMap();
 
 
 //creates starting conditions for the game 
