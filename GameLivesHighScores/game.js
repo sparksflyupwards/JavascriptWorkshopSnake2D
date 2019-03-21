@@ -15,6 +15,7 @@ var map_row_length = canvas.height/cell_size;
 //snake and food design variables
 var snake_color = "blue";
 var food_color = "brown";
+var food_color_array = ["red", "blue", "green", "yellow", "pink", "purple", "brown", "black", "magenta", "cyan"]
 
 //game data
 var snake =  [{x: 2, y: 0}, {x: 1, y: 0}, {x: 0, y: 0}];
@@ -63,6 +64,8 @@ function generateFood(){
       }
   }
   food = {x:food_x, y:food_y};
+  setNewFoodColor();
+
 }
 
 //prints the current state of the game
@@ -83,6 +86,22 @@ function drawSnake(){
         ctx.fillStyle = snake_color;
         ctx.fillRect(snake[i].x*cell_size+cell_size/7,snake[i].y*cell_size+cell_size/7,cell_size-2*cell_size/7,cell_size-2*cell_size/7);
     }
+}
+
+function setNewFoodColor() {
+    var c = Math.floor(Math.random() * food_color_array.length);
+    console.log(c);
+    if (c < 0)
+        c = 0;
+    if (c > food_color_array.length - 1)
+        c = food_color_array.length - 1;
+
+    setSnakeColor(food_color);
+    food_color = food_color_array[c];
+}
+
+function setSnakeColor(color) {
+    snake_color = color;
 }
 
 function drawFood(){
