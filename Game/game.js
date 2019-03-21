@@ -79,21 +79,14 @@ function drawMap(){
 function drawSnake(){
   for(var i=0; i<snake.length; i++){
         ctx.fillStyle = snake_color;
-
-       // ctx.fillRect(snake[i].x*cell_size,snake[i].y*cell_size,cell_size,cell_size);
         ctx.fillRect(snake[i].x*cell_size+cell_size/7,snake[i].y*cell_size+cell_size/7,cell_size-2*cell_size/7,cell_size-2*cell_size/7);
     }
 }
 function drawFood(){
-  ctx.shadowBlur = 10;
-  ctx.shadowColor = "red";
+
   ctx.fillStyle = food_color;
-  ctx.beginPath();
-  ctx.arc(food.x*cell_size+cell_size/2,food.y*cell_size+cell_size/2,cell_size/2, 0, 2 * Math.PI);
-  ctx.stroke();
-    //ctx.fillRect(food.x*cell_size,food.y*cell_size,cell_size,cell_size);
-  ctx.shadowBlur = 0;
-  ctx.shadowColor = "";
+  ctx.fillRect(food.x*cell_size,food.y*cell_size,cell_size,cell_size);
+
 
 }
 
