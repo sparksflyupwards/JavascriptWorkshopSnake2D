@@ -1,37 +1,22 @@
 //settup the canvas object and the context
-var canvas = document.getElementById("canvas")
-canvas.width=700;
-canvas.height=700;
-var ctx = canvas.getContext('2d');
 
 
 
 //create an event listener to respond to user keystrokes
-document.addEventListener("keydown",newDirection)
 
 
 
 //these variables configure how the game is printed
-var cell_size = 20;
-var map_coloumn_length = canvas.width/cell_size;
-var map_row_length = canvas.height/cell_size;
 
 //snake and food design variables
-var snake_color = "blue";
-var food_color = "red";
 
 
 //game data
-var snake = [{x:0,y:0},{x:1,y:0},{x:2,y:0}];
-var food = {};
-var score = 0;
+//position data type {x:[int] , y:[int]}
 
-//timer variables 
-var game_speed = 100;
-var game;
+//timer variables
 
 //control variables
-var snake_direction = "right";
 
 
 
