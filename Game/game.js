@@ -1,5 +1,3 @@
-
-
 //settup the canvas object and the context
 var canvas = document.getElementById("canvas")
 canvas.width=700;
@@ -70,34 +68,40 @@ function drawMap(){
   //clear the canvas
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
-  //draw the snake
+  //draw game elements
+  drawSnake();
+  drawFood();
+  drawScore();
+ 
+  }
+
+
+function drawSnake(){
   for(var i=0; i<snake.length; i++){
         ctx.fillStyle = snake_color;
 
        // ctx.fillRect(snake[i].x*cell_size,snake[i].y*cell_size,cell_size,cell_size);
         ctx.fillRect(snake[i].x*cell_size+cell_size/7,snake[i].y*cell_size+cell_size/7,cell_size-2*cell_size/7,cell_size-2*cell_size/7);
     }
-
-  //draw the food
+}
+function drawFood(){
   ctx.shadowBlur = 10;
   ctx.shadowColor = "red";
   ctx.fillStyle = food_color;
   ctx.beginPath();
   ctx.arc(food.x*cell_size+cell_size/2,food.y*cell_size+cell_size/2,cell_size/2, 0, 2 * Math.PI);
   ctx.stroke();
-  //ctx.fillRect(food.x*cell_size,food.y*cell_size,cell_size,cell_size);
+    //ctx.fillRect(food.x*cell_size,food.y*cell_size,cell_size,cell_size);
   ctx.shadowBlur = 0;
   ctx.shadowColor = "";
 
+}
 
-
-
-  //draw the score
+function drawScore(){
   ctx.fillStyle = "black";
   ctx.font = "30px Arial";
   ctx.fillText("Score: "+score,(map_coloumn_length-8)*cell_size,50);
-  }
-
+}
 
 function shiftSnake(snake_head_x,snake_head_y){
 
