@@ -1,41 +1,57 @@
-let c = document.getElementById("canva")
-c.width=700;
-c.height=700;
-let ctx = c.getContext('2d');
-let food_image = document.getElementById("foodImage");
+
+
+//settup the canvas object and the context
+var canvas = document.getElementById("canvas")
+canvas.width=700;
+canvas.height=700;
+var ctx = canvas.getContext('2d');
+
+
+
+//create an event listener to respond to user keystrokes
 document.addEventListener("keydown",newDirection)
 
 
-var cell_size = 20;
-var map_coloumn_length = c.width/cell_size;
-var map_row_length = c.height/cell_size;
 
+//these variables configure how the game is printed
+var cell_size = 20;
+var map_coloumn_length = canvas.width/cell_size;
+var map_row_length = canvas.height/cell_size;
+
+//snake and food design variables
 var snake_color = "blue";
 var food_color = "red";
 
 
+//game data
+var snake = [{x:0,y:0},{x:1,y:0},{x:2,y:0}];
+var food = {};
+var score = 0;
 
-let snake = [{x:0,y:0},{x:1,y:0},{x:2,y:0}];
-let food = {};
+//timer variables 
+var game_speed = 100;
+var game;
 
-let game_speed = 100;
-let game = setInterval(gameLoop, game_speed);
-
-let snake_direction = "right";
-
-
-let score = 0;
+//control variables
+var snake_direction = "right";
 
 
-function createClearMap(){
-  snake = [{x:2,y:0},{x:1,y:0},{x:0,y:0}];
-  generateFood();
-}
 
+
+//start a new game
 createClearMap();
 generateFood();
 drawMap();
 
+
+//creates starting conditions for the game 
+function createClearMap(){
+  snake = [{x:2,y:0},{x:1,y:0},{x:0,y:0}];
+  generateFood();
+  game = setInterval(gameLoop, game_speed);
+}
+
+//creates a new food item that is within the map and not on top of the cell
 function generateFood(){
   var food_x = Math.floor(Math.random()*map_coloumn_length-0.002);
   var food_y = Math.floor(Math.random()*map_row_length-0.002);
@@ -45,39 +61,35 @@ function generateFood(){
         generateFood();
       }
   }
-  console.log(food_x)
   food = {x:food_x, y:food_y};
 }
 
+//prints the current state of the game
 function drawMap(){
 
   //clear the canvas
-  //ctx.fiLStyle = "black"
-  ctx.clearRect(0,0,c.width,c.height);
-  //ctx.clearRect(5,5,c.width-10,c.height-10);
+  ctx.clearRect(0,0,canvas.width,canvas.height);
 
   //draw the snake
   for(var i=0; i<snake.length; i++){
-        ctx.fillStyle = "white";
-        //ctx.fillRect(snake[i].x*cell_size,snake[i].y*cell_size,cell_size,cell_size);
         ctx.fillStyle = snake_color;
+
+       // ctx.fillRect(snake[i].x*cell_size,snake[i].y*cell_size,cell_size,cell_size);
         ctx.fillRect(snake[i].x*cell_size+cell_size/7,snake[i].y*cell_size+cell_size/7,cell_size-2*cell_size/7,cell_size-2*cell_size/7);
     }
 
   //draw the food
-   ctx.shadowBlur = 20;
-  ctx.shadowColor = "white";
+  ctx.shadowBlur = 10;
+  ctx.shadowColor = "red";
   ctx.fillStyle = food_color;
-  ctx.fillRect(food.x*cell_size,food.y*cell_size,cell_size,cell_size);
-    ctx.shadowBlur = 0;
-  ctx.shadowColor = "";
-  /**
-  ctx.shadowBlur = 20;
-  ctx.shadowColor = "white";
-  ctx.drawImage(food_image, 0, 0, food_image.width, food_image.height, food.x*cell_size,food.y*cell_size,cell_size,cell_size);
+  ctx.beginPath();
+  ctx.arc(food.x*cell_size+cell_size/2,food.y*cell_size+cell_size/2,cell_size/2, 0, 2 * Math.PI);
+  ctx.stroke();
+  //ctx.fillRect(food.x*cell_size,food.y*cell_size,cell_size,cell_size);
   ctx.shadowBlur = 0;
   ctx.shadowColor = "";
-  */
+
+
 
 
   //draw the score
@@ -130,35 +142,39 @@ function checkCollisions(prev_pos){
     snake.push(prev_pos);
   }
 }
+
+
 function moveSnake(direction){
+        //store the snakehead's starting position
+        prev_pos = {x: snake[0].x, y: snake[0].y};
 
+        //move the snake depending up the current direction of the snake
+        if(direction == "left"){
+          snake[0].x = snake[0].x-1;
+        }
 
-  prev_pos = {x: snake[0].x, y: snake[0].y};
-  if(direction == "left"){
-    snake[0].x = snake[0].x-1;
-  }
+        if(direction == "right"){
+          snake[0].x = snake[0].x+1;
+        }
 
-  if(direction == "right"){
-    snake[0].x = snake[0].x+1;
-  }
+        if(direction == "up"){
+          snake[0].y = snake[0].y-1;
+        }
 
-  if(direction == "up"){
-    snake[0].y = snake[0].y-1;
-  }
+        if(direction == "down"){
+          snake[0].y = snake[0].y+1;
+        }
 
-  if(direction == "down"){
-    snake[0].y = snake[0].y+1;
-  }
+        //check collisions and shift the rest of the snake
+        checkCollisions(prev_pos);
+        shiftSnake(prev_pos.x,prev_pos.y);
 
-  checkCollisions(prev_pos);
-  shiftSnake(prev_pos.x,prev_pos.y);
 
 }
 
   
-  
+  //set the new direction of the snake depending on the user input ensuring not to allow illegal moves
 function newDirection(event){
-
   if(event.keyCode == 37&&snake_direction!="right"){
     snake_direction = "left";
   }
@@ -173,20 +189,24 @@ function newDirection(event){
   }
 }
 
-
+//create the game over screen
 function gameOver(){
   console.log("GAME OVER");
-  
-  console.log(ctx.clearRect(0,0,c.width,c.height));
+  console.log(ctx.clearRect(0,0,canvas.width,canvas.height));
+
+
   ctx.font = "30px Arial";
-  ctx.fillText("Game over",c.width/2-50,c.height/2-50);
+  ctx.fillText("Game over!",canvas.width/2-50,canvas.height/2-50);
+
   clearTimeout(game);
+  game_is_running = false;
 }
+
+//this is the function the timer executes every cycle
 function gameLoop(){
   drawMap();
   moveSnake(snake_direction);
   
 }
-
 
 
