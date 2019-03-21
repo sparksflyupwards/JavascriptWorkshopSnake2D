@@ -102,10 +102,11 @@ function drawScore(){
 
 function shiftSnake(snake_head_x,snake_head_y){
 
-  let prev_pos = {x:snake_head_x, y:snake_head_y};
-  let current_pos = {}
+  var prev_pos = {x:snake_head_x, y:snake_head_y};
+  var current_pos = {}
 
-  for(let i=1; i<snake.length; i++){
+  //moves every cell of the snake one step forward
+  for(var i=1; i<snake.length; i++){
     current_pos = snake[i];
     snake[i]=prev_pos;
     prev_pos = current_pos;
@@ -192,15 +193,13 @@ function newDirection(event){
 
 //create the game over screen
 function gameOver(){
+  
   console.log("GAME OVER");
-  console.log(ctx.clearRect(0,0,canvas.width,canvas.height));
-
-
+  ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.font = "30px Arial";
   ctx.fillText("Game over!",canvas.width/2-50,canvas.height/2-50);
 
   clearTimeout(game);
-  game_is_running = false;
 }
 
 //this is the function the timer executes every cycle

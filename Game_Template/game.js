@@ -1,4 +1,4 @@
-//settup the canvas object and the context
+//###settup the canvas object and the context
 
 
 
@@ -21,10 +21,10 @@
 
 
 
-//start a new game
+//###start a new game
 
 
-//creates starting conditions for the game 
+//###creates starting conditions for the game 
 function createClearMap(){
 }
 
@@ -44,13 +44,9 @@ function generateFood(){
 //prints the current state of the game
 function drawMap(){
 
-  //clear the canvas
-  ctx.clearRect(0,0,canvas.width,canvas.height);
+  //### clear the canvas
 
-  //draw game elements
-  drawSnake();
-  drawFood();
-  drawScore();
+  //### draw game elements
  
   }
 
@@ -64,7 +60,7 @@ function drawSnake(){
 
 /*
 
-
+###
 function drawFood(){
 }
 
@@ -72,7 +68,7 @@ function drawFood(){
 */
 
 /*
-
+###
 function drawScore(){
 }
 
@@ -80,10 +76,10 @@ function drawScore(){
 
 function shiftSnake(snake_head_x,snake_head_y){
 
-  let prev_pos = {x:snake_head_x, y:snake_head_y};
-  let current_pos = {}
+  //###create previous_pos and current_pos variables
 
-  for(let i=1; i<snake.length; i++){
+  //moves every cell of the snake one step forward
+  for(var i=1; i<snake.length; i++){
     current_pos = snake[i];
     snake[i]=prev_pos;
     prev_pos = current_pos;
@@ -132,19 +128,19 @@ function moveSnake(direction){
 
         //move the snake depending up the current direction of the snake
         if(direction == "left"){
-          snake[0].x = snake[0].x-1;
+          /* do stuff */
         }
 
         if(direction == "right"){
-          snake[0].x = snake[0].x+1;
+           /* do stuff */
         }
 
         if(direction == "up"){
-          snake[0].y = snake[0].y-1;
+          /* do stuff */
         }
 
         if(direction == "down"){
-          snake[0].y = snake[0].y+1;
+          /* do stuff */
         }
 
         //check collisions and shift the rest of the snake
@@ -157,37 +153,34 @@ function moveSnake(direction){
   
   //set the new direction of the snake depending on the user input ensuring not to allow illegal moves
 function newDirection(event){
+
   if(event.keyCode == left_key && snake_direction!=""){
-    snake_direction = "left";
+        /* do stuff */
   }
   else if(event.keyCode == up_key && snake_direction!=""){
-    snake_direction = "up";
+        /* do stuff */
   }
   else if(event.keyCode == right_key && snake_direction!=""){
-    snake_direction = "right";
+      /* do stuff */
   }
   else if(event.keyCode == down_key && snake_direction!=""){
-    snake_direction = "down";
+        /* do stuff */
   }
 }
 
 //create the game over screen
 function gameOver(){
+
   console.log("GAME OVER");
-  console.log(ctx.clearRect(0,0,canvas.width,canvas.height));
-
-
+  ctx.clearRect(0,0,canvas.width,canvas.height);
   ctx.font = "30px Arial";
   ctx.fillText("Game over!",canvas.width/2-50,canvas.height/2-50);
-
   clearTimeout(game);
-  game_is_running = false;
 }
 
-//this is the function the timer executes every cycle
+//### this is the function the timer executes every cycle
 function gameLoop(){
-  drawMap();
-  moveSnake(snake_direction);
+
   
 }
 
