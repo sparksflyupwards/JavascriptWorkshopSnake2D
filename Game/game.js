@@ -32,7 +32,10 @@ var game;
 
 //control variables
 var snake_direction = "right";
-
+var left_key = 37;
+var up_key = 38;
+var right_key = 39;
+var down_key = 40;
 
 
 
@@ -173,16 +176,16 @@ function moveSnake(direction){
   
   //set the new direction of the snake depending on the user input ensuring not to allow illegal moves
 function newDirection(event){
-  if(event.keyCode == 37&&snake_direction!="right"){
+  if(event.keyCode == left_key && snake_direction!="right"){
     snake_direction = "left";
   }
-  else if(event.keyCode == 38&&snake_direction!="down"){
+  else if(event.keyCode == up_key && snake_direction!="down"){
     snake_direction = "up";
   }
-  else if(event.keyCode == 39&&snake_direction!="left"){
+  else if(event.keyCode == right_key &&snake_direction!="left"){
     snake_direction = "right";
   }
-  else if(event.keyCode == 40&&snake_direction!="up"){
+  else if(event.keyCode == down_key &&snake_direction!="up"){
     snake_direction = "down";
   }
 }

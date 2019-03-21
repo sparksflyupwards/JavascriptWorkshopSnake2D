@@ -29,15 +29,12 @@ drawMap();
 
 //creates starting conditions for the game 
 function createClearMap(){
-  snake = [{x:2,y:0},{x:1,y:0},{x:0,y:0}];
-  generateFood();
-  game = setInterval(gameLoop, game_speed);
 }
 
 //creates a new food item that is within the map and not on top of the cell
 function generateFood(){
-  var food_x = Math.floor(Math.random()*map_coloumn_length-0.002);
-  var food_y = Math.floor(Math.random()*map_row_length-0.002);
+  var food_x = Math.floor(Math.random()*map_coloumn_length);
+  var food_y = Math.floor(Math.random()*map_row_length);
 
   for(let i = 0; i<snake.length; i++){
       if(snake[i].x==food_x&&snake[i].y==food_y){
@@ -67,19 +64,22 @@ function drawSnake(){
         ctx.fillRect(snake[i].x*cell_size+cell_size/7,snake[i].y*cell_size+cell_size/7,cell_size-2*cell_size/7,cell_size-2*cell_size/7);
     }
 }
+
+/*
+
+
 function drawFood(){
-
-  ctx.fillStyle = food_color;
-  ctx.fillRect(food.x*cell_size,food.y*cell_size,cell_size,cell_size);
-
-
 }
+
+
+*/
+
+/*
 
 function drawScore(){
-  ctx.fillStyle = "black";
-  ctx.font = "30px Arial";
-  ctx.fillText("Score: "+score,(map_coloumn_length-8)*cell_size,50);
 }
+
+*/
 
 function shiftSnake(snake_head_x,snake_head_y){
 
@@ -99,29 +99,32 @@ function checkCollisions(prev_pos){
 
   //see if snake has left bounds
   if(snake[0].x<0||snake[0].x>map_coloumn_length){
-    gameOver();
-    return;
+     /**
+    do stuff
+    */
   }
 
    if(snake[0].y<0||snake[0].y>map_row_length){
-    gameOver();
-    return;
+    /**
+    do stuff
+    */
   }
 
   //see if snake steps onto it self
   for(let i=1; i<snake.length; i++){
     if(snake[0].x==snake[i].x&&snake[0].y==snake[i].y){
 
-      gameOver();
-      return;
+      /**
+      do stuff
+      */
     }
   }
 
   //see if snake ate the food
   if(snake[0].x==food.x&&snake[0].y==food.y){
-    score+=10;
-    generateFood();
-    snake.push(prev_pos);
+    /**
+    do stuff
+    */
   }
 }
 
@@ -157,16 +160,16 @@ function moveSnake(direction){
   
   //set the new direction of the snake depending on the user input ensuring not to allow illegal moves
 function newDirection(event){
-  if(event.keyCode == 37&&snake_direction!="right"){
+  if(event.keyCode == left_key && snake_direction!=""){
     snake_direction = "left";
   }
-  else if(event.keyCode == 38&&snake_direction!="down"){
+  else if(event.keyCode == up_key && snake_direction!=""){
     snake_direction = "up";
   }
-  else if(event.keyCode == 39&&snake_direction!="left"){
+  else if(event.keyCode == right_key && snake_direction!=""){
     snake_direction = "right";
   }
-  else if(event.keyCode == 40&&snake_direction!="up"){
+  else if(event.keyCode == down_key && snake_direction!=""){
     snake_direction = "down";
   }
 }
