@@ -51,8 +51,8 @@ function createClearMap(){
 
 //creates a new food item that is within the map and not on top of the cell
 function generateFood(){
-  var food_x = Math.floor(Math.random()*map_coloumn_length-0.002);
-  var food_y = Math.floor(Math.random()*map_row_length-0.002);
+  var food_x = Math.floor(Math.random()*map_coloumn_length);
+  var food_y = Math.floor(Math.random()*map_row_length);
 
   for(let i = 0; i<snake.length; i++){
       if(snake[i].x==food_x&&snake[i].y==food_y){
@@ -69,9 +69,10 @@ function drawMap(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
 
   //draw game elements
+  drawScore();
   drawSnake();
   drawFood();
-  drawScore();
+
  
   }
 
